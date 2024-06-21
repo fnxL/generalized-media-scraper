@@ -9,7 +9,7 @@
         "lint:fix": "eslint --fix .",
         "format": "prettier . --write --ignore-unknown",
         "prepare": "husky",
-        "build": "tsc -p tsconfig.json"
+        "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json"
     },
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
@@ -19,6 +19,7 @@
     "license": "ISC",
     "devDependencies": {
         "@eslint/js": "^9.5.0",
+        "@types/convict": "^6.1.6",
         "@types/eslint-config-prettier": "^6.11.3",
         "@types/eslint__js": "^8.42.3",
         "@types/node": "^20.14.7",
@@ -27,8 +28,12 @@
         "husky": "^9.0.11",
         "lint-staged": "^15.2.7",
         "prettier": "3.3.2",
+        "tsc-alias": "^1.8.10",
         "tsx": "^4.15.7",
         "typescript": "^5.5.2",
         "typescript-eslint": "^7.13.1"
+    },
+    "dependencies": {
+        "convict": "^6.2.4"
     }
 }
