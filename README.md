@@ -188,6 +188,16 @@ You can configure these defaults in `config/development.json `or config/producti
 
 ## TODO
 
+- Handle downloading different media types
 - Maybe provide a way to do nested listItems?
 - Logging
 - Retry scraping based on maxRetries
+- Introduce random delay before each retry
+
+## Libraries used
+
+- axios 
+- cheerio - html5 compliant parser and query
+- convict - config management
+- tsc-alias - for resolving import path aliases after build
+- playwright - headless chromium browser to get html for pages that need to be rendered
