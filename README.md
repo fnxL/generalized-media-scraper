@@ -20,11 +20,11 @@ The selector api is exactly the same as selectors in cheerio. Please refer [chee
         data: { // define the data that you want to receive for each post
             postTitle: ".post-title", // providing a selector directly will resolve to text content
             postImage: {
-                selector: ".post-image"
+                selector: ".post-image",
                 attribute: "src",
                 download: true, // specify download: true to download the media
                 mediaType: "image" // also specify the mediaType
-            }
+            },
             articleTag: {
                 attribute: "data-tag" // TODO only providing attribute should run the query on the root listItem / article node
             },
@@ -37,7 +37,7 @@ The selector api is exactly the same as selectors in cheerio. Please refer [chee
         }
     },
     articles: {
-        listItem: '[role=article]' // maybe select all those nodes which have attribute role=article
+        listItem: '[role=article]', // maybe select all those nodes which have attribute role=article
         data: {
             // again you can define any type of data you want 
             articleNumber: ".article-number"
@@ -50,14 +50,14 @@ The selector api is exactly the same as selectors in cheerio. Please refer [chee
 
 ### Creating scraper class for each site
 
-Create a new file in the sites folder and define your selectors
+Create a new file in the sites folder and define your selectors. For this example, we are going to scrape Reddit posts from http://new.reddit.com along with images and videos
 
 ```js
 import { Selectors } from './BaseScraper';
 
 // Define selectors for your scraper
 const selectors: Selectors = {
-    articles: {
+    posts: {
         listItem: 'article', // Selector for the list of items/elements
         data: {
             // Here you can define the data that you want to scrape.
@@ -99,13 +99,12 @@ const selectors: Selectors = {
 - Define the `folderName` in which you want the media to be saved and define a scrape method as below
 - Do a named export of this class
 ```js
-class ExampleScraper extends BaseScraper {
+class RedditScrapper extends BaseScraper {
     constructor(opts: ScraperOpts) {
         super({ ...opts, folderName: 'reddit' });
         // you need to define the folderName in which the media will be saved
     }
-
-    // you need to call implement scrape method which calls _scrape method and pass the selectors
+    // you need to implement scrape method which calls _scrape method of BaseScraper and pass the selectors object that you defined earlier.
     async scrape(url: string, selector: Selectors = selectors) {
         return this._scrape(url, selector);
     }
@@ -117,21 +116,23 @@ export { ExampleScraper };
 
 ```js
 import ScraperService from './scraper/sites'
-import {ExampleScraper} from './scraper/sites/ExampleScraper'
+import {RedditScraper} from './scraper/sites/RedditScraper'
 
 (async () => {
     const scraper = new ScraperService({
         useHeadLessBrowser: false,
         maxRetires: 10
-    }).getScraper(ExampleScraper)
+    }).getScraper(RedditScraper)
 
-    const data = await scraper.scrape("https://example.comexample/")
+    const data = await scraper.scrape("https://new.reddit.com/")
 
-    console.log(data)
+    console.log(data) // Maybe save the data into a file or db
 })()
 ```
 
 ## Using the scraper directly without defining a site
+
+It is possible to simply use the scraper without creating scraper classes, but you must provide the selectors when calling the scrape method.
 
 ```js
 import ScraperService from './scraper/sites'
