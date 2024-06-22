@@ -1,7 +1,6 @@
 import config from '@config';
 import * as Sites from './sites/';
 import { Scraper } from './sites/';
-import { RedditScraper } from './sites/RedditScraper';
 
 export interface UserScraperOpts {
     downloadPath?: string; // Path to download the files
