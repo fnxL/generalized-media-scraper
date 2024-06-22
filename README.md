@@ -1,11 +1,23 @@
-# General Media Scraper
+# Generalized Media Scraper
+
+- [Generalized Media Scraper](#generalized-media-scraper)
+  - [Installing and running locally](#installing-and-running-locally)
+  - [Selectors](#selectors)
+  - [Usage](#usage)
+    - [Creating scraper class for each site](#creating-scraper-class-for-each-site)
+      - [Using the scraper](#using-the-scraper)
+    - [Using the scraper directly without defining a site](#using-the-scraper-directly-without-defining-a-site)
+  - [Scraper Options](#scraper-options)
+  - [TODO](#todo)
+  - [Libraries used](#libraries-used)
+
 
 ## Installing and running locally
 
 ```bash
-$ git clone whateverRepoURL
-$ pnpm install
-$ pnpm start
+git clone https://github.com/fnxL/generalized-media-scraper.git
+pnpm install
+pnpm start
 ```
 
 
@@ -130,7 +142,7 @@ import {RedditScraper} from './scraper/sites/RedditScraper'
 })()
 ```
 
-## Using the scraper directly without defining a site
+### Using the scraper directly without defining a site
 
 It is possible to simply use the scraper without creating scraper classes, but you must provide the selectors when calling the scrape method.
 
