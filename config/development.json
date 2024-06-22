@@ -2,6 +2,9 @@
     "scraper": {
         "maxRetries": 5,
         "connections": 10,
-        "supportedSites": ["reddit"]
+        "downloadPath": "./downloads",
+        "folderName": "default",
+        "useHeadlessBrowser": false,
+        "overwriteExistingFiles": false
     }
 }

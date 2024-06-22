@@ -9,7 +9,6 @@ export interface UserScraperOpts {
     maxRetries?: number;
     useHeadLessBrowser?: boolean;
     overwriteExistingFiles?: boolean;
-    mediaType?: ('image' | 'video' | 'audio' | 'pdf' | 'gif')[];
 }
 
 export type ScraperOpts = Required<UserScraperOpts>;
@@ -23,13 +22,17 @@ class ScraperService {
 
     private createScraperOpts(opts: UserScraperOpts): ScraperOpts {
         return {
-            connections: config.get('scraper.connections'),
-            maxRetries: config.get('scraper.maxRetries'),
-            downloadPath: opts.downloadPath ?? './downloads',
-            useHeadLessBrowser: opts.useHeadLessBrowser ?? false,
-            overwriteExistingFiles: opts.overwriteExistingFiles ?? false,
-            folderName: opts.folderName ?? 'default',
-            mediaType: opts.mediaType ?? ['image', 'video'],
+            connections: opts.connections || config.get('scraper.connections'),
+            maxRetries: opts.maxRetries || config.get('scraper.maxRetries'),
+            downloadPath:
+                opts.downloadPath || config.get('scraper.downloadPath'),
+            useHeadLessBrowser:
+                opts.useHeadLessBrowser ||
+                config.get('scraper.useHeadlessBrowser'),
+            overwriteExistingFiles:
+                opts.overwriteExistingFiles ||
+                config.get('scraper.overwriteExistingFiles'),
+            folderName: opts.folderName || config.get('scraper.folderName'),
         };
     }
 
