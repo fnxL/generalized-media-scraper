@@ -109,7 +109,8 @@ const selectors: Selectors = {
 
 - Create a scraper class that extends the `BaseScraper` and matches the filename
 - Define the `folderName` in which you want the media to be saved and define a scrape method as below
-- Do a named export of this class
+- Finally export the class
+  
 ```js
 class RedditScrapper extends BaseScraper {
     constructor(opts: ScraperOpts) {
@@ -122,7 +123,7 @@ class RedditScrapper extends BaseScraper {
     }
 }
 
-export { ExampleScraper };
+export { RedditScrapper };
 ```
 #### Using the scraper
 
@@ -163,11 +164,11 @@ import ScraperService from './scraper/sites'
             data: { // define the data that you want to receive for each post
                 postTitle: ".post-title", // providing a selector directly will resolve to text content
                 postImage: {
-                    selector: ".post-image"
+                    selector: ".post-image",
                     attribute: "src",
                     download: true,
                     mediaType: "image"
-                }
+                },
                 articleTag: {
                     attribute: "data-tag" // TODO only providing attribute should run the query on the root listItem / article node
                 },
@@ -185,7 +186,7 @@ import ScraperService from './scraper/sites'
 
 ## Scraper Options
 
-You can configure these defaults in `config/development.json `or config/production.json
+You can configure these defaults in `config/development.json` or `config/production.json`
 
 `downloadPath` | Default: `./downloads'` - Root path to download all media files from different sites
 
