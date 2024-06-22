@@ -4,7 +4,6 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint .",
         "lint:fix": "eslint --fix .",
         "format": "prettier . --write --ignore-unknown",
@@ -19,6 +18,7 @@
     "license": "ISC",
     "devDependencies": {
         "@eslint/js": "^9.5.0",
+        "@playwright/test": "^1.44.1",
         "@types/convict": "^6.1.6",
         "@types/eslint-config-prettier": "^6.11.3",
         "@types/eslint__js": "^8.42.3",
@@ -27,6 +27,7 @@
         "eslint-config-prettier": "^9.1.0",
         "husky": "^9.0.11",
         "lint-staged": "^15.2.7",
+        "playwright": "^1.44.1",
         "prettier": "3.3.2",
         "tsc-alias": "^1.8.10",
         "tsx": "^4.15.7",
@@ -34,6 +35,12 @@
         "typescript-eslint": "^7.13.1"
     },
     "dependencies": {
-        "convict": "^6.2.4"
+        "axios": "^1.7.2",
+        "cheerio": "1.0.0-rc.12",
+        "convict": "^6.2.4",
+        "domutils": "^3.1.0",
+        "hlsdownloader": "^3.2.6",
+        "htmlparser2": "^9.1.0",
+        "nodejs-file-downloader": "^4.13.0"
     }
 }

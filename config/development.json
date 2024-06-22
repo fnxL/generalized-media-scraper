@@ -1,3 +1,7 @@
 {
-    "maxRetries": 5
+    "scraper": {
+        "maxRetries": 5,
+        "connections": 10,
+        "supportedSites": ["reddit"]
+    }
 }

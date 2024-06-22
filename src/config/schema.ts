@@ -14,10 +14,22 @@ const config = convict({
         env: 'PORT',
         arg: 'port',
     },
-    maxRetries: {
-        doc: 'Maximum retires to try before aborting scraping',
-        format: 'int',
-        default: 3,
+    scraper: {
+        maxRetries: {
+            doc: 'Maximum retires to try before aborting scraping',
+            format: 'int',
+            default: 3,
+        },
+        connections: {
+            doc: 'Maximum number of connections to use while downloading a file',
+            format: 'int',
+            default: 5,
+        },
+        supportedSites: {
+            doc: 'Array of supported sites',
+            format: Array,
+            default: ['reddit'],
+        },
     },
 });
 
