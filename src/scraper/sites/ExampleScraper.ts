@@ -1,5 +1,6 @@
-import BaseScraper from './BaseScraper';
-import { Selectors } from './BaseScraper';
+import BaseScraper from '../BaseScraper';
+import { Selectors } from '../BaseScraper';
+import ContentFetcher from '../ContentFetcher';
 import { ScraperOpts } from '../scraper.service';
 
 // Define selectors for your scraper

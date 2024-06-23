@@ -1,3 +1,4 @@
+import util from 'util';
 import ScraperService from './scraper/scraper.service';
 import { RedditScraper } from './scraper/sites/RedditScraper';
 
@@ -9,7 +10,7 @@ async function scrp() {
     }).getScraper(RedditScraper);
 
     const data = await scraper.scrape('https://new.reddit.com');
-    console.log(data);
+    console.log(util.inspect(data, false, null, true /* enable colors */));
 }
 
 scrp();
