@@ -6,9 +6,9 @@
   - [Usage](#usage)
   - [Using the scraper](#using-the-scraper)
   - [Using provided selectors for popular sites](#using-provided-selectors-for-popular-sites)
-    - [Reddit Scraper](#reddit-scraper)
-    - [Google News scraper](#google-news-scraper)
-    - [ArxivScraper](#arxivscraper)
+    - [Reddit](#reddit)
+    - [Google News](#google-news)
+    - [Arxiv](#arxiv)
   - [Scraper Options](#scraper-options)
   - [TODO](#todo)
   - [Libraries used](#libraries-used)
@@ -180,7 +180,7 @@ import ScraperService from './scraper/scraper.service';
 ```
 ## Using provided selectors for popular sites
 
-### Reddit Scraper
+### Reddit
 
 Use playwright if you want to scrape more content.
 
@@ -195,22 +195,24 @@ import redditSelectors from './scraper/selectors/reddit';
         usePlaywright: true,
         downloadPath: './downloads',
         folderName: 'reddit'
-    }).getScraper(RedditScraper);
+    }).getScraper();
 
     const data = await scraper.scrape(
         'https://reddit.com/r/programming',
         'programming',
+        redditSelectors
     );
     // media files will be stored in './downloads/reddit/programming/'
     const data2 = await scraper.scrape(
         'https://reddit.com/r/mkindia',
         'mkindia',
+        redditSelectors
     );
     // media files will be stored in './downloads/reddit/mkindia/'
 })();
 ```
 
-### Google News scraper
+### Google News
 
 ```js
 import googleNewsSelectors from './scraper/selectors/googlenews;
@@ -225,15 +227,17 @@ import googleNewsSelectors from './scraper/selectors/googlenews;
     const data = await scraper.scrape(
         'https://news.google.com/',
         'home',
+        googleNewsSelectors
     ); // fetch all articles from home page
     const data2 = await scraper.scrape(
         'https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRGRqTVhZU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=en-IN&gl=IN&ceid=IN%3Aen',
         'technology',
+        googleNewsSelectors
     ); // fetch all articles from technology topic page
 })();
 ```
 
-### ArxivScraper
+### Arxiv
 
 You should link to the arxiv page which have list of entries, for eg: https://arxiv.org/list/math/new or https://arxiv.org/list/hep-ex/2024-01
 
@@ -245,16 +249,18 @@ import arxivSelectors from './scraper/selectors/arxiv';
         usePlaywright: 'false',
         downloadPath: './downloads',
         folderName: 'arxiv'
-    }).getScraper(ArxivScraper);
+    }).getScraper();
 
     const data = await scraper.scrape(
         'https://arxiv.org/list/math.RA/recent',
         'Math RA',
+        arxivSelectors
     ); // fetch all papers from recent page of Math RA
 
     const data2 = await scraper.scrape(
         "https://arxiv.org/list/math/2024-04",
-        "Math 2024-04"
+        "Math 2024-04",
+        arxivSelectors
     ); // fetch all papers from April 2024 (only from the first page)
 })();
 ```
