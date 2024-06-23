@@ -2,6 +2,8 @@ import * as cheerio from 'cheerio';
 import { ScraperOpts } from './scraper.service';
 import { validateUrl } from '@utils';
 import ContentFetcher from './ContentFetcher';
+import Downloader from '../downloader/Downloader';
+import { attr } from 'cheerio/lib/api/attributes';
 
 interface AttributeSelector {
     selector: string;
@@ -25,10 +27,16 @@ export interface Selectors {
 class BaseScraper {
     private opts: ScraperOpts;
     protected contentFetcher: ContentFetcher;
+    private downloader: Downloader;
 
-    constructor(opts: ScraperOpts, contentFetcher?: ContentFetcher) {
+    constructor(
+        opts: ScraperOpts,
+        contentFetcher?: ContentFetcher,
+        downloader?: Downloader,
+    ) {
         this.opts = opts;
         this.contentFetcher = contentFetcher || new ContentFetcher();
+        this.downloader = downloader || new Downloader(opts);
     }
 
     async _scrape(url: string, selectors: Selectors) {
@@ -84,9 +92,10 @@ class BaseScraper {
         // TODO Handle Downloading media
         const convertedValue = value.convert ? value.convert(attrVal) : attrVal;
         if (value.download) {
+            const filePath = await this.downloader.download(attrVal);
             const data = {
                 originalUrl: convertedValue,
-                filePath: undefined,
+                filePath,
                 size: undefined,
                 // othermetadata
             };

@@ -8,14 +8,20 @@ class Downloader {
         this.opts = opts;
     }
 
-    async download(url: string) {
-        const dir = path.join(this.opts.downloadPath, this.opts.folderName);
+    private async downloadHLS(url: string, dir: string) {
+        // TODO: Implement HLS download
+    }
 
+    private async downloadFile(url: string, dir: string) {
         let fileName: string;
         const downloader = new NodeDownloader({
             url,
             directory: dir,
             cloneFiles: !this.opts.overwriteExistingFiles,
+            onResponse: response => {
+                console.log('Response: ', response.headers['content-type']);
+                console.log('Response: ', response.headers['content-length']);
+            },
             onBeforeSave: deducedName => {
                 fileName = deducedName;
             },
@@ -38,6 +44,16 @@ class Downloader {
             console.log('Failed to download file. Aborting');
             throw error;
         }
+    }
+
+    async download(url: string) {
+        const dir = path.join(this.opts.downloadPath, this.opts.folderName);
+
+        if (url.includes('.m3u8')) {
+            return this.downloadHLS(url, dir);
+        }
+
+        return this.downloadFile(url, dir);
     }
 }
 
