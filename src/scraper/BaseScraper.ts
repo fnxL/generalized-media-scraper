@@ -94,13 +94,13 @@ class BaseScraper {
     ) {
         if (!list.data) {
             // listItem has no data to extract, so just select the text
-            return $(element).find(list.listItem).text();
+            return $(element).find(list.listItem).text().trim();
         }
 
         const elementData: any = {};
         for (const [key, value] of Object.entries(list.data)) {
             if (typeof value === 'string') {
-                elementData[key] = $(element).find(value).text();
+                elementData[key] = $(element).find(value).text().trim();
             } else if ('listItem' in value) {
                 // Recursive call for nested list
                 elementData[key] = await this.processSelector(
@@ -142,7 +142,10 @@ class BaseScraper {
             // select immediate next element
             const nextElement = $(element).next();
             if (typeof value.nextSelector === 'string') {
-                const val = $(nextElement).find(value.nextSelector).text();
+                const val = $(nextElement)
+                    .find(value.nextSelector)
+                    .text()
+                    .trim();
                 if (!val) return;
 
                 const convertedVal = value.convert ? value.convert(val) : val;
