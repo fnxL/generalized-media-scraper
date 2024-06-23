@@ -7,6 +7,10 @@
     - [Creating scraper class for each site](#creating-scraper-class-for-each-site)
       - [Using the scraper](#using-the-scraper)
     - [Using the scraper directly without defining a site](#using-the-scraper-directly-without-defining-a-site)
+    - [Using some of the inbuilt provided scrapers](#using-some-of-the-inbuilt-provided-scrapers)
+      - [Reddit Scraper](#reddit-scraper)
+      - [Google News scraper](#google-news-scraper)
+      - [ArxivScraper](#arxivscraper)
   - [Scraper Options](#scraper-options)
   - [TODO](#todo)
   - [Libraries used](#libraries-used)
@@ -232,6 +236,89 @@ import ScraperService from './scraper/sites'
         }
     })
 })()
+```
+
+### Using some of the inbuilt provided scrapers 
+
+#### Reddit Scraper
+
+Use headless browser if you want to scrape more content.
+
+Should be able to scrape posts from any subreddit(s)
+
+```js
+import RedditScraper from './scraper/sites/RedditScraper';
+
+(async () => {
+    const scraper = new ScraperService({
+        useHeadLessBrowser: false,
+        downloadPath: './downloads',
+    }).getScraper(RedditScraper);
+
+    const data = await scraper.scrape(
+        'https://reddit.com/r/programming',
+        'programming',
+    );
+    const data2 = await scraper.scrape(
+        'https://reddit.com/r/mkindia',
+        'mkindia',
+    );
+
+    // save your data to a file or database
+})();
+```
+
+#### Google News scraper
+
+```js
+import GoogleNewsScraper from './scraper/sites/GoogleNewsScraper';
+
+(async () => {
+    const scraper = new ScraperService({
+        useHeadLessBrowser: false,
+        downloadPath: './downloads',
+    }).getScraper(GoogleNewsScraper);
+
+    const data = await scraper.scrape(
+        'https://news.google.com/',
+        'home',
+    ); // fetch all articles from home page
+    const data2 = await scraper.scrape(
+        'https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRGRqTVhZU0JXVnVMVWRDR2dKSlRpZ0FQAQ?hl=en-IN&gl=IN&ceid=IN%3Aen',
+        'technology',
+    ); // fetch all articles from technology topic page
+
+    // save your data to a file or database
+})();
+```
+
+#### ArxivScraper
+
+You should link to the arxiv page which have list of entries, for eg: https://arxiv.org/list/math/new or https://arxiv.org/list/hep-ex/2024-01
+
+
+
+```js
+import ArxivScraper from './scraper/sites/ArxivScraper';
+
+(async () => {
+    const scraper = new ScraperService({
+        useHeadLessBrowser: false,
+        downloadPath: './downloads',
+    }).getScraper(ArxivScraper);
+
+    const data = await scraper.scrape(
+        'https://arxiv.org/list/math.RA/recent',
+        'Math RA',
+    ); // fetch all papers from recent page of Math RA
+
+    // save your data to a file or database
+
+    const data2 = await scraper.scrape(
+        "https://arxiv.org/list/math/2024-04",
+        "Math 2024-04"
+    ); // fetch all papers from April 2024 (only from the first page)
+})();
 ```
 
 ## Scraper Options

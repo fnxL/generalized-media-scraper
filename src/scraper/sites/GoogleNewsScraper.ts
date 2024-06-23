@@ -36,4 +36,4 @@ class GoogleNewsScraper extends BaseScraper {
     }
 }
 
-export { GoogleNewsScraper };
+export default GoogleNewsScraper;

@@ -58,4 +58,4 @@ class RedditScraper extends BaseScraper {
 }
 
 // File name and ClassName should match. Should named export.
-export { RedditScraper };
+export default RedditScraper;
