@@ -4,44 +4,6 @@ import { validateUrl } from '@utils';
 import ContentFetcher from './ContentFetcher';
 import Downloader from '../downloader/Downloader';
 
-const selectors: Selectors = {
-    posts: {
-        listItem: 'article', // Selector for the list of items/elements
-        data: {
-            // Here you can define the data that you want to scrape.
-            title: {
-                selector: 'shreddit-post',
-                attribute: 'post-title',
-            },
-            postLink: {
-                selector: 'shreddit-post',
-                attribute: 'permalink',
-                // If you want to convert the value before saving it, you can define a convert call back function.
-                convert: (value: string) => `https://reddit.com${value}`,
-            },
-            commentCount: {
-                selector: 'shreddit-post',
-                attribute: 'comment-count',
-            },
-            subReddit: {
-                selector: 'shreddit-post',
-                attribute: 'subreddit-prefixed-name',
-            },
-            author: {
-                selector: 'shreddit-post',
-                attribute: 'author',
-            },
-            // If you want to download the media, you can set download to true.
-            image: {
-                selector: '[role=presentation]',
-                attribute: 'src',
-                download: true,
-            },
-            postContent: 'div[data-post-click-location=text-body]',
-        },
-    },
-};
-
 interface Common {
     convert?: (value: string) => string | string[];
     download?: boolean;
