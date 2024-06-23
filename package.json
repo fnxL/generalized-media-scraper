@@ -41,9 +41,6 @@
         "axios": "^1.7.2",
         "cheerio": "1.0.0-rc.12",
         "convict": "^6.2.4",
-        "domutils": "^3.1.0",
-        "hlsdownloader": "^3.2.6",
-        "htmlparser2": "^9.1.0",
         "nodejs-file-downloader": "^4.13.0"
     }
 }
