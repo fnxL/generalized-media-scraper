@@ -10,7 +10,8 @@
         "prepare": "husky",
         "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
         "start": "node dist/main.js",
-        "dev": "tsx src/main.ts"
+        "dev": "tsx src/main.ts",
+        "postinstall": "pnpm build"
     },
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
