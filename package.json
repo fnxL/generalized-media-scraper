@@ -41,6 +41,7 @@
         "axios": "^1.7.2",
         "cheerio": "1.0.0-rc.12",
         "convict": "^6.2.4",
+        "delay": "^6.0.0",
         "nodejs-file-downloader": "^4.13.0"
     }
 }

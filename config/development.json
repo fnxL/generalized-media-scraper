@@ -4,6 +4,7 @@
         "downloadPath": "./downloads",
         "folderName": "default",
         "usePlaywright": false,
-        "overwriteExistingFiles": false
+        "overwriteExistingFiles": false,
+        "delay": [1000, 2000]
     }
 }

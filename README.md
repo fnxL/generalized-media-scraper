@@ -314,6 +314,8 @@ You can configure these defaults in `config/development.json` or `config/product
 
 `overwriteExistingFiles` | Default: `false`
 
+`delay` | default: `[1000, 2000]` - Range of delay between each request in milliseconds
+
 ## TODO
 
 - Handle downloading .m3u8 playlists

@@ -1,14 +1,18 @@
 import axios from 'axios';
+import delay, { rangeDelay } from 'delay';
 import { chromium } from 'playwright';
 
 class ContentFetcher {
     private maxRetries: number;
-    constructor(maxRetries: number) {
+    private delay: number[];
+    constructor(maxRetries: number, delay: number[]) {
         this.maxRetries = maxRetries;
+        this.delay = delay;
     }
 
     public async fetchHTMLContent(url: string, usePlaywright: boolean = false) {
         for (let attempts = 0; attempts < this.maxRetries; attempts++) {
+            rangeDelay(this.delay[0], this.delay[1]);
             try {
                 if (usePlaywright) {
                     return this.fetchPlaywright(url);

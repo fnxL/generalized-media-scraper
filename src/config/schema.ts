@@ -40,6 +40,11 @@ const config = convict({
             format: Boolean,
             default: false,
         },
+        delay: {
+            doc: 'Range of delay between each request in milliseconds',
+            format: '*',
+            default: [1000, 2000],
+        },
     },
 });
 

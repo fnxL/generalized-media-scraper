@@ -43,7 +43,8 @@ class BaseScraper {
     ) {
         this.opts = opts;
         this.contentFetcher =
-            contentFetcher || new ContentFetcher(this.opts.maxRetries);
+            contentFetcher ||
+            new ContentFetcher(this.opts.maxRetries, this.opts.delay);
         this.downloader = downloader || new Downloader(opts);
         this.defaultFolder = this.opts.folderName;
     }

@@ -7,6 +7,7 @@ export interface UserScraperOpts {
     maxRetries?: number;
     usePlaywright?: boolean;
     overwriteExistingFiles?: boolean;
+    delay?: number[];
 }
 
 export type ScraperOpts = Required<UserScraperOpts>;
@@ -29,6 +30,7 @@ class ScraperService {
                 opts.overwriteExistingFiles ||
                 config.get('scraper.overwriteExistingFiles'),
             folderName: opts.folderName || config.get('scraper.folderName'),
+            delay: opts.delay || config.get('scraper.delay'),
         };
     }
 
