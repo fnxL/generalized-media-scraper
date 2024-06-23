@@ -4,11 +4,11 @@
   - [Installing and running locally](#installing-and-running-locally)
   - [Defining Selectors](#defining-selectors)
   - [Usage](#usage)
-  - [Using the scraper](#using-the-scraper)
-  - [Using provided selectors for popular sites](#using-provided-selectors-for-popular-sites)
-    - [Reddit](#reddit)
-    - [Google News](#google-news)
-    - [Arxiv](#arxiv)
+    - [Using the scraper](#using-the-scraper)
+    - [Using provided selectors for popular sites](#using-provided-selectors-for-popular-sites)
+      - [Reddit](#reddit)
+      - [Google News](#google-news)
+      - [Arxiv](#arxiv)
   - [Scraper Options](#scraper-options)
   - [TODO](#todo)
   - [Libraries used](#libraries-used)
@@ -90,7 +90,7 @@ You need to define a selector object which defines the structure of the data tha
 ```
 ## Usage
 
-## Using the scraper
+### Using the scraper
 
 ```js
 import util from 'util'
@@ -183,9 +183,9 @@ import ScraperService from './scraper/scraper.service';
 */
 })()
 ```
-## Using provided selectors for popular sites
+### Using provided selectors for popular sites
 
-### Reddit
+#### Reddit
 
 Use playwright if you want to scrape more content.
 
@@ -217,7 +217,7 @@ import redditSelectors from './scraper/selectors/reddit';
 })();
 ```
 
-### Google News
+#### Google News
 
 ```js
 import googleNewsSelectors from './scraper/selectors/googlenews;
@@ -242,7 +242,7 @@ import googleNewsSelectors from './scraper/selectors/googlenews;
 })();
 ```
 
-### Arxiv
+#### Arxiv
 
 You should link to the arxiv page which have list of entries, for eg: https://arxiv.org/list/math/new or https://arxiv.org/list/hep-ex/2024-01
 
