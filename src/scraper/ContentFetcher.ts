@@ -15,9 +15,10 @@ class ContentFetcher {
         const browser = await chromium.launch({
             headless: false,
         });
+        console.log('Fetching using playwright...');
         const page = await browser.newPage();
         await page.goto(url);
-        await page.waitForLoadState('domcontentloaded');
+        await page.waitForLoadState('load');
         const html = await page.content();
         await page.close();
         await browser.close();

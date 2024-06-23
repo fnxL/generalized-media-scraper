@@ -58,7 +58,10 @@ class BaseScraper {
         else this.opts.folderName = this.defaultFolder;
 
         validateUrl(url);
-        const html = await this.contentFetcher.fetchHTMLContent(url);
+        const html = await this.contentFetcher.fetchHTMLContent(
+            url,
+            this.opts.useHeadLessBrowser,
+        );
         const $ = cheerio.load(html);
         const data: any = {};
         for (const [key, value] of Object.entries(selectors)) {
