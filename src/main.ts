@@ -1,5 +1,6 @@
 import util from 'util';
 import ScraperService from './scraper/scraper.service';
+import redditSelectors from './scraper/selectors/reddit';
 
 (async () => {
     const scraper = new ScraperService({
@@ -9,28 +10,9 @@ import ScraperService from './scraper/scraper.service';
     }).getScraper();
 
     const data = await scraper.scrape(
-        'https://www.reddit.com/r/interestingasfuck/',
-        'interestingasfuck',
-        {
-            posts: {
-                listItem: 'article',
-                data: {
-                    title: {
-                        selector: 'shreddit-post',
-                        attribute: 'post-title',
-                    },
-                    image: {
-                        selector: '[role=presentation]',
-                        attribute: 'src',
-                    },
-                    video: {
-                        selector: 'shreddit-player',
-                        attribute: 'src',
-                        download: true,
-                    },
-                },
-            },
-        },
+        'https://www.reddit.com/r/popular/',
+        'popular',
+        redditSelectors,
     );
     console.log(util.inspect(data, false, null, true /* enable colors */));
 })();

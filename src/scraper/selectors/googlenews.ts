@@ -1,7 +1,7 @@
-import BaseScraper, { Selectors } from '../BaseScraper';
+import { Selectors } from '../BaseScraper';
 import { ScraperOpts } from '../scraper.service';
 
-const selectors: Selectors = {
+const googleNewsSelectors: Selectors = {
     articles: {
         listItem: 'article',
         data: {
@@ -22,18 +22,4 @@ const selectors: Selectors = {
     },
 };
 
-class GoogleNewsScraper extends BaseScraper {
-    constructor(opts: ScraperOpts) {
-        super({ ...opts, folderName: 'theplace-2.com' });
-    }
-
-    async scrape(
-        url: string,
-        folder: string = '',
-        selector: Selectors = selectors,
-    ) {
-        return this._scrape(url, selector, folder);
-    }
-}
-
-export default GoogleNewsScraper;
+export default googleNewsSelectors;

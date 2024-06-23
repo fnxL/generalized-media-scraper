@@ -1,5 +1,5 @@
 import config from '@config';
-import DefaultScraper from './sites/DefaultScraper';
+import DefaultScraper from './DefaultScraper';
 
 export interface UserScraperOpts {
     downloadPath?: string; // Path to download the files

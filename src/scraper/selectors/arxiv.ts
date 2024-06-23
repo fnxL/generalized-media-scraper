@@ -1,7 +1,6 @@
-import BaseScraper, { Selectors } from '../BaseScraper';
-import { ScraperOpts } from '../scraper.service';
+import { Selectors } from '../BaseScraper';
 
-const selectors: Selectors = {
+const arxivSelectors: Selectors = {
     papers: {
         listItem: 'dt',
         data: {
@@ -33,18 +32,4 @@ const selectors: Selectors = {
     },
 };
 
-class ArxivScraper extends BaseScraper {
-    constructor(opts: ScraperOpts) {
-        super({ ...opts, folderName: 'arxiv' });
-    }
-
-    async scrape(
-        url: string,
-        folder: string = '',
-        selector: Selectors = selectors,
-    ) {
-        return this._scrape(url, selector, folder);
-    }
-}
-
-export default ArxivScraper;
+export default arxivSelectors;

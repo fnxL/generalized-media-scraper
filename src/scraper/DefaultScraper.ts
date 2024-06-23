@@ -1,6 +1,6 @@
-import BaseScraper from '../BaseScraper';
-import { Selectors } from '../BaseScraper';
-import { ScraperOpts } from '../scraper.service';
+import BaseScraper from './BaseScraper';
+import { Selectors } from './BaseScraper';
+import { ScraperOpts } from './scraper.service';
 
 class DefaultScraper extends BaseScraper {
     constructor(opts: ScraperOpts) {
