@@ -4,18 +4,25 @@ import { validateUrl } from '@utils';
 import ContentFetcher from './ContentFetcher';
 import Downloader from '../downloader/Downloader';
 
-interface AttributeSelector {
-    selector: string;
-    attribute: string;
+interface Common {
     convert?: (value: string) => string;
     download?: boolean;
-    mediaType?: 'image' | 'video' | 'audio' | 'pdf' | 'gif';
+}
+
+interface AttributeSelector extends Common {
+    selector: string;
+    attribute: string;
+}
+
+interface NextSelector extends Common {
+    selector: string;
+    nextSelector: string | AttributeSelector;
 }
 
 interface ListItem {
     listItem: string;
     data: {
-        [key: string]: string | AttributeSelector;
+        [key: string]: string | AttributeSelector | NextSelector;
     };
 }
 
@@ -94,27 +101,72 @@ class BaseScraper {
     private async extractAttribute(
         $: cheerio.CheerioAPI,
         element: cheerio.AnyNode,
-        value: AttributeSelector,
+        value: AttributeSelector | NextSelector,
     ) {
-        const attrVal = $(element).find(value.selector).attr(value.attribute);
-        if (!attrVal) return;
+        if ('attribute' in value) {
+            const attrVal = $(element)
+                .find(value.selector)
+                .attr(value.attribute);
 
-        // TODO Handle Downloading media
-        const convertedValue = value.convert ? value.convert(attrVal) : attrVal;
-        if (value.download) {
-            const file = await this.downloader.download(convertedValue);
-            if (!file) return;
-            const { downloadPath, fileName, fileSize, mimeType } = file;
-            const data = {
-                originalUrl: convertedValue,
-                filePath: downloadPath,
-                fileName,
-                size: fileSize,
-                mimeType,
-            };
-            return data;
+            if (!attrVal) return;
+
+            const convertedValue = value.convert
+                ? value.convert(attrVal)
+                : attrVal;
+
+            if (value.download) {
+                return this.handleDownload(convertedValue);
+            }
+            return convertedValue;
         }
-        return convertedValue;
+
+        if ('nextSelector' in value) {
+            // select immediate next element
+            const nextElement = $(element).next();
+            if (typeof value.nextSelector === 'string') {
+                const val = $(nextElement).find(value.nextSelector).text();
+                if (!val) return;
+
+                const convertedVal = value.convert ? value.convert(val) : val;
+
+                if (value.download) {
+                    return this.handleDownload(convertedVal);
+                }
+
+                return convertedVal;
+            }
+
+            const val = nextElement
+                .find(value.nextSelector.selector)
+                .attr(value.nextSelector.attribute);
+
+            if (!val) return;
+
+            const convertedVal = value.nextSelector.convert
+                ? value.nextSelector.convert(val)
+                : val;
+
+            if (value.nextSelector.download) {
+                return this.handleDownload(convertedVal);
+            }
+            return convertedVal;
+        }
+
+        return;
+    }
+
+    private async handleDownload(url: string) {
+        const file = await this.downloader.download(url);
+        if (!file) return;
+        const { downloadPath, fileName, fileSize, mimeType } = file;
+        const data = {
+            originalUrl: url,
+            filePath: downloadPath,
+            fileName,
+            size: fileSize,
+            mimeType,
+        };
+        return data;
     }
 }
 

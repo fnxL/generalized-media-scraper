@@ -1,14 +1,17 @@
 import util from 'util';
 import ScraperService from './scraper/scraper.service';
-import { RedditScraper } from './scraper/sites/RedditScraper';
+import ArxivScraper from './scraper/sites/ArxivScraper';
 
 async function scrp() {
     const scraper = new ScraperService({
         useHeadLessBrowser: false,
         downloadPath: './downloads',
-    }).getScraper(RedditScraper);
+    }).getScraper(ArxivScraper);
 
-    const data = await scraper.scrape('https://new.reddit.com/', 'popular');
+    const data = await scraper.scrape(
+        'https://arxiv.org/list/math.RA/recent',
+        'math',
+    );
     console.log(util.inspect(data, false, null, true /* enable colors */));
 }
 
