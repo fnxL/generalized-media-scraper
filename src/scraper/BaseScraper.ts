@@ -3,12 +3,11 @@ import { ScraperOpts } from './scraper.service';
 import { validateUrl } from '@utils';
 import ContentFetcher from './ContentFetcher';
 import Downloader from '../downloader/Downloader';
-import { attr } from 'cheerio/lib/api/attributes';
 
 interface AttributeSelector {
     selector: string;
     attribute: string;
-    convert?: (value: string) => void;
+    convert?: (value: string) => string;
     download?: boolean;
     mediaType?: 'image' | 'video' | 'audio' | 'pdf' | 'gif';
 }
@@ -28,6 +27,7 @@ class BaseScraper {
     private opts: ScraperOpts;
     protected contentFetcher: ContentFetcher;
     private downloader: Downloader;
+    private defaultFolder: string;
 
     constructor(
         opts: ScraperOpts,
@@ -37,9 +37,19 @@ class BaseScraper {
         this.opts = opts;
         this.contentFetcher = contentFetcher || new ContentFetcher();
         this.downloader = downloader || new Downloader(opts);
+        this.defaultFolder = this.opts.folderName;
     }
 
-    async _scrape(url: string, selectors: Selectors) {
+    protected async _scrape(
+        url: string,
+        selectors: Selectors,
+        folderName?: string,
+    ) {
+        // set a new nested folder name if provided
+        if (folderName)
+            this.opts.folderName = `${this.opts.folderName}/${folderName}`;
+        else this.opts.folderName = this.defaultFolder;
+
         validateUrl(url);
         const html = await this.contentFetcher.fetchHTMLContent(url);
         const $ = cheerio.load(html);
@@ -92,7 +102,7 @@ class BaseScraper {
         // TODO Handle Downloading media
         const convertedValue = value.convert ? value.convert(attrVal) : attrVal;
         if (value.download) {
-            const file = await this.downloader.download(attrVal);
+            const file = await this.downloader.download(convertedValue);
             if (!file) return;
             const { downloadPath, fileName, fileSize, mimeType } = file;
             const data = {

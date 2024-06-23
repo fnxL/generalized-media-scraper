@@ -1,6 +1,5 @@
 import config from '@config';
-import * as Sites from './sites/';
-import { Scraper } from './sites/';
+import BaseScraper from './BaseScraper';
 
 export interface UserScraperOpts {
     downloadPath?: string; // Path to download the files
@@ -36,7 +35,9 @@ class ScraperService {
         };
     }
 
-    getScraper(ScraperClass: Scraper = Sites.DefaultScraper) {
+    getScraper<T extends BaseScraper>(
+        ScraperClass: new (opts: ScraperOpts) => T,
+    ): T {
         return new ScraperClass(this.opts);
     }
 }
