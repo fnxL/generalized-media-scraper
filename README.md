@@ -23,7 +23,7 @@ pnpm start
 
 ## Selectors
 
-The selector api is exactly the same as selectors in cheerio. Please refer [cheerio docs](https://cheerio.js.org/docs/basics/selecting) 
+You need to define a selector object which defines the structure of the data that you want to scrape.
 
 ```js
 {
