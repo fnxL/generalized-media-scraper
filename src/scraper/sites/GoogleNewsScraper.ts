@@ -29,10 +29,10 @@ class GoogleNewsScraper extends BaseScraper {
 
     async scrape(
         url: string,
-        modelFolder: string = '',
+        folder: string = '',
         selector: Selectors = selectors,
     ) {
-        return this._scrape(url, selector, modelFolder);
+        return this._scrape(url, selector, folder);
     }
 }
 

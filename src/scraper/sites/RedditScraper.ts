@@ -4,7 +4,7 @@ import { ScraperOpts } from '../scraper.service';
 
 // Define selectors for your scraper
 const selectors: Selectors = {
-    articles: {
+    posts: {
         listItem: 'article', // Selector for the list of items/elements
         data: {
             // Here you can define the data that you want to scrape.
@@ -30,13 +30,13 @@ const selectors: Selectors = {
                 selector: 'shreddit-post',
                 attribute: 'author',
             },
-            // If you want to download the media, you can set download to true and must provide mediaType
-            imageUrl: {
+            // If you want to download the media, you can set download to true.
+            image: {
                 selector: '[role=presentation]',
                 attribute: 'src',
                 download: true,
-                mediaType: 'image',
             },
+            postContent: 'div[data-post-click-location=text-body]',
         },
     },
 };
@@ -48,8 +48,12 @@ class RedditScraper extends BaseScraper {
     }
 
     // you need to call implement scrape method which calls _scrape method and pass the selectors
-    async scrape(url: string, selector: Selectors = selectors) {
-        return this._scrape(url, selector);
+    async scrape(
+        url: string,
+        folder: string = '',
+        selector: Selectors = selectors,
+    ) {
+        return this._scrape(url, selector, folder);
     }
 }
 
