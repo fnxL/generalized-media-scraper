@@ -139,7 +139,7 @@ import {RedditScraper} from './scraper/sites/RedditScraper'
 
 (async () => {
     const scraper = new ScraperService({
-        useHeadLessBrowser: false,
+        usePlaywright: true,
         maxRetires: 10
     }).getScraper(RedditScraper)
 
@@ -206,7 +206,7 @@ import ScraperService from './scraper/sites'
 
 (async () => {
     const scraper = new ScraperService({
-        useHeadLessBrowser: false, // use headless browser for pages that need rendering
+        usePlaywright: false, // use playwright browser for pages that need rendering
         downloadPath: './downloads',
         folderName: 'example.com', // the media files will be stored in downloads/example.com folder
         maxRetires: 10,
@@ -242,7 +242,7 @@ import ScraperService from './scraper/sites'
 
 #### Reddit Scraper
 
-Use headless browser if you want to scrape more content.
+Use playwright if you want to scrape more content.
 
 Should be able to scrape posts from any subreddit(s)
 
@@ -251,7 +251,7 @@ import RedditScraper from './scraper/sites/RedditScraper';
 
 (async () => {
     const scraper = new ScraperService({
-        useHeadLessBrowser: false,
+        usePlaywright: true,
         downloadPath: './downloads',
     }).getScraper(RedditScraper);
 
@@ -275,7 +275,6 @@ import GoogleNewsScraper from './scraper/sites/GoogleNewsScraper';
 
 (async () => {
     const scraper = new ScraperService({
-        useHeadLessBrowser: false,
         downloadPath: './downloads',
     }).getScraper(GoogleNewsScraper);
 
@@ -303,7 +302,6 @@ import ArxivScraper from './scraper/sites/ArxivScraper';
 
 (async () => {
     const scraper = new ScraperService({
-        useHeadLessBrowser: false,
         downloadPath: './downloads',
     }).getScraper(ArxivScraper);
 
@@ -333,7 +331,7 @@ You can configure these defaults in `config/development.json` or `config/product
 
 `maxRetries` | Default: `5` - Maximum retires before the file download is aborted
 
-`useHeadLessBrowser` | Default: `false` - Will use headless chromium browser to render the html content. Defaults to false, which uses html returned by HttpRequest
+`usePlaywright` | Default: `false` - Will playwright chromium to render the html content. Defaults to false, which uses html returned by HttpRequest
 
 `overwriteExistingFiles` | Default: `false`
 

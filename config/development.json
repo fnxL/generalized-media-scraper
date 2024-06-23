@@ -4,7 +4,7 @@
         "connections": 10,
         "downloadPath": "./downloads",
         "folderName": "default",
-        "useHeadlessBrowser": false,
+        "usePlaywright": false,
         "overwriteExistingFiles": false
     }
 }

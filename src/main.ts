@@ -4,7 +4,7 @@ import RedditScraper from './scraper/sites/RedditScraper';
 
 (async () => {
     const scraper = new ScraperService({
-        useHeadLessBrowser: false,
+        usePlaywright: false,
         downloadPath: './downloads',
     }).getScraper(RedditScraper);
 

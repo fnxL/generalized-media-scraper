@@ -60,7 +60,7 @@ class BaseScraper {
         validateUrl(url);
         const html = await this.contentFetcher.fetchHTMLContent(
             url,
-            this.opts.useHeadLessBrowser,
+            this.opts.usePlaywright,
         );
         const $ = cheerio.load(html);
         const data: any = {};

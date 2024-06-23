@@ -35,8 +35,8 @@ const config = convict({
             format: String,
             default: 'default',
         },
-        useHeadlessBrowser: {
-            doc: 'Use headless chromium browser to render the html and scrape',
+        usePlaywright: {
+            doc: 'Use playwright to render the html and scrape',
             format: Boolean,
             default: false,
         },

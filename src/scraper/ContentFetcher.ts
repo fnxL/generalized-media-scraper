@@ -4,14 +4,14 @@ import { chromium } from 'playwright';
 class ContentFetcher {
     constructor() {}
 
-    public async fetchHTMLContent(url: string, headless: boolean = false) {
-        if (headless) {
-            return this.fetchHeadless(url);
+    public async fetchHTMLContent(url: string, usePlaywright: boolean = false) {
+        if (usePlaywright) {
+            return this.fetchPlaywright(url);
         }
         return this.httpFetch(url);
     }
 
-    private async fetchHeadless(url: string) {
+    private async fetchPlaywright(url: string) {
         const browser = await chromium.launch({
             headless: false,
         });

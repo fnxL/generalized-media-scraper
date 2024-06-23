@@ -6,7 +6,7 @@ export interface UserScraperOpts {
     folderName?: string; // Folder name to store the files
     connections?: number;
     maxRetries?: number;
-    useHeadLessBrowser?: boolean;
+    usePlaywright?: boolean;
     overwriteExistingFiles?: boolean;
 }
 
@@ -25,9 +25,8 @@ class ScraperService {
             maxRetries: opts.maxRetries || config.get('scraper.maxRetries'),
             downloadPath:
                 opts.downloadPath || config.get('scraper.downloadPath'),
-            useHeadLessBrowser:
-                opts.useHeadLessBrowser ||
-                config.get('scraper.useHeadlessBrowser'),
+            usePlaywright:
+                opts.usePlaywright || config.get('scraper.usePlaywright'),
             overwriteExistingFiles:
                 opts.overwriteExistingFiles ||
                 config.get('scraper.overwriteExistingFiles'),
