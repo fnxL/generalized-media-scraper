@@ -3,7 +3,7 @@ import NodeDownloader from 'nodejs-file-downloader';
 import { ScraperOpts } from 'src/scraper/scraper.service';
 
 class Downloader {
-    opts: ScraperOpts;
+    private opts: ScraperOpts;
     constructor(opts: ScraperOpts) {
         this.opts = opts;
     }
@@ -19,6 +19,12 @@ class Downloader {
             onBeforeSave: deducedName => {
                 fileName = deducedName;
             },
+            onProgress: function (percentage, chunk, remainingSize) {
+                //Gets called with each chunk.
+                console.log('% ', percentage);
+                console.log('Current chunk of data: ', chunk);
+                console.log('Remaining bytes: ', remainingSize);
+            },
             maxAttempts: this.opts.maxRetries,
         });
 
@@ -28,7 +34,9 @@ class Downloader {
             const downloadPath = path.join(dir, fileName!);
             return downloadPath;
         } catch (error) {
-            console.log(error);
+            //If all attempts fail, the last error is thrown.
+            console.log('Failed to download file. Aborting');
+            throw error;
         }
     }
 }
