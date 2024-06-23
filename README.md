@@ -195,6 +195,7 @@ Below example code will scrape 10 pages of images of Sydney Sweeney
 import util from 'util';
 import ScraperService from './scraper/scraper.service';
 import theplace2Selectors from './selectors/theplace2';
+import delay from 'delay'
 
 (async () => {
     const scraper = new ScraperService({
@@ -204,6 +205,8 @@ import theplace2Selectors from './selectors/theplace2';
     }).getScraper();
 
     for (let i = 1; i <= 10; i++) {
+        // better to add delay of 1500 ms between each request
+        await delay(1500)
         const data = await scraper.scrape(
             `https://theplace-2.com/photos/Sydney-Sweeney-md6824/page${i}/`,
             'Sydney Sweeny',
