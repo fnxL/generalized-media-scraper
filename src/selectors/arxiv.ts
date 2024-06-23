@@ -1,4 +1,4 @@
-import { Selectors } from '../BaseScraper';
+import { Selectors } from '../scraper/BaseScraper';
 
 const arxivSelectors: Selectors = {
     papers: {

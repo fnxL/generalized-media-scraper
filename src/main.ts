@@ -1,6 +1,6 @@
 import util from 'util';
 import ScraperService from './scraper/scraper.service';
-import redditSelectors from './scraper/selectors/reddit';
+import redditSelectors from './selectors/reddit';
 
 (async () => {
     const scraper = new ScraperService({

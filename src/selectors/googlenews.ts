@@ -1,5 +1,5 @@
-import { Selectors } from '../BaseScraper';
-import { ScraperOpts } from '../scraper.service';
+import { Selectors } from '../scraper/BaseScraper';
+import { ScraperOpts } from '../scraper/scraper.service';
 
 const googleNewsSelectors: Selectors = {
     articles: {
