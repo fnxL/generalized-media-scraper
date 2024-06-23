@@ -92,12 +92,15 @@ class BaseScraper {
         // TODO Handle Downloading media
         const convertedValue = value.convert ? value.convert(attrVal) : attrVal;
         if (value.download) {
-            const filePath = await this.downloader.download(attrVal);
+            const file = await this.downloader.download(attrVal);
+            if (!file) return;
+            const { downloadPath, fileName, fileSize, mimeType } = file;
             const data = {
                 originalUrl: convertedValue,
-                filePath,
-                size: undefined,
-                // othermetadata
+                filePath: downloadPath,
+                fileName,
+                size: fileSize,
+                mimeType,
             };
             return data;
         }

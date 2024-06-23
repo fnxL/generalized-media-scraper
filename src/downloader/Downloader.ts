@@ -13,22 +13,23 @@ class Downloader {
     }
 
     private async downloadFile(url: string, dir: string) {
-        let fileName: string;
+        let fileName = '';
+        let fileSize = 0; // in bytes
+        let mimeType = '';
         const downloader = new NodeDownloader({
             url,
             directory: dir,
             cloneFiles: !this.opts.overwriteExistingFiles,
             onResponse: response => {
-                console.log('Response: ', response.headers['content-type']);
-                console.log('Response: ', response.headers['content-length']);
+                mimeType = response.headers['content-type'] || '';
+                fileSize = parseInt(response.headers['content-length'] || '0');
             },
             onBeforeSave: deducedName => {
                 fileName = deducedName;
             },
             onProgress: function (percentage, chunk, remainingSize) {
                 //Gets called with each chunk.
-                console.log('% ', percentage);
-                console.log('Current chunk of data: ', chunk);
+                console.log(`Progress: ${percentage}%`);
                 console.log('Remaining bytes: ', remainingSize);
             },
             maxAttempts: this.opts.maxRetries,
@@ -38,7 +39,13 @@ class Downloader {
             // Download the file
             const { filePath, downloadStatus } = await downloader.download();
             const downloadPath = path.join(dir, fileName!);
-            return downloadPath;
+            const data = {
+                downloadPath,
+                fileName,
+                fileSize,
+                mimeType,
+            };
+            return data;
         } catch (error) {
             //If all attempts fail, the last error is thrown.
             console.log('Failed to download file. Aborting');
