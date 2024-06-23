@@ -4,8 +4,46 @@ import { validateUrl } from '@utils';
 import ContentFetcher from './ContentFetcher';
 import Downloader from '../downloader/Downloader';
 
+const selectors: Selectors = {
+    posts: {
+        listItem: 'article', // Selector for the list of items/elements
+        data: {
+            // Here you can define the data that you want to scrape.
+            title: {
+                selector: 'shreddit-post',
+                attribute: 'post-title',
+            },
+            postLink: {
+                selector: 'shreddit-post',
+                attribute: 'permalink',
+                // If you want to convert the value before saving it, you can define a convert call back function.
+                convert: (value: string) => `https://reddit.com${value}`,
+            },
+            commentCount: {
+                selector: 'shreddit-post',
+                attribute: 'comment-count',
+            },
+            subReddit: {
+                selector: 'shreddit-post',
+                attribute: 'subreddit-prefixed-name',
+            },
+            author: {
+                selector: 'shreddit-post',
+                attribute: 'author',
+            },
+            // If you want to download the media, you can set download to true.
+            image: {
+                selector: '[role=presentation]',
+                attribute: 'src',
+                download: true,
+            },
+            postContent: 'div[data-post-click-location=text-body]',
+        },
+    },
+};
+
 interface Common {
-    convert?: (value: string) => string;
+    convert?: (value: string) => string | string[];
     download?: boolean;
 }
 
@@ -21,8 +59,8 @@ interface NextSelector extends Common {
 
 interface ListItem {
     listItem: string;
-    data: {
-        [key: string]: string | AttributeSelector | NextSelector;
+    data?: {
+        [key: string]: string | AttributeSelector | NextSelector | ListItem;
     };
 }
 
@@ -70,9 +108,15 @@ class BaseScraper {
         return data;
     }
 
-    private processSelector($: cheerio.CheerioAPI, list: ListItem) {
+    private processSelector(
+        $: cheerio.CheerioAPI,
+        list: ListItem,
+        element?: cheerio.AnyNode,
+    ) {
         const keyData: any = [];
-        const elements = $(list.listItem);
+        const elements = element
+            ? $(element).find(list.listItem)
+            : $(list.listItem);
         elements.each((index, element) => {
             const data = this.extractDataFromListItem($, element, list);
             keyData.push(data);
@@ -84,18 +128,27 @@ class BaseScraper {
     private async extractDataFromListItem(
         $: cheerio.CheerioAPI,
         element: cheerio.AnyNode,
-        { data }: ListItem,
+        list: ListItem,
     ) {
+        if (!list.data) {
+            // listItem has no data to extract, so just select the text
+            return $(element).find(list.listItem).text();
+        }
+
         const elementData: any = {};
-        for (const [key, value] of Object.entries(data)) {
+        for (const [key, value] of Object.entries(list.data)) {
             if (typeof value === 'string') {
                 elementData[key] = $(element).find(value).text();
-            } else {
-                elementData[key] = await this.extractAttribute(
+            } else if ('listItem' in value) {
+                // Recursive call for nested list
+                elementData[key] = await this.processSelector(
                     $,
-                    element,
                     value,
+                    element,
                 );
+            } else {
+                const data = await this.extractAttribute($, element, value);
+                if (data) elementData[key] = data;
             }
         }
         return elementData;
@@ -158,18 +211,20 @@ class BaseScraper {
         return;
     }
 
-    private async handleDownload(url: string) {
-        const file = await this.downloader.download(url);
-        if (!file) return;
-        const { downloadPath, fileName, fileSize, mimeType } = file;
-        const data = {
-            originalUrl: url,
-            filePath: downloadPath,
-            fileName,
-            size: fileSize,
-            mimeType,
-        };
-        return data;
+    private async handleDownload(url: string | string[]) {
+        if (typeof url === 'string') {
+            const file = await this.downloader.download(url);
+            if (!file) return;
+            const { downloadPath, fileName, fileSize, mimeType } = file;
+            const data = {
+                originalUrl: url,
+                filePath: downloadPath,
+                fileName,
+                size: fileSize,
+                mimeType,
+            };
+            return data;
+        }
     }
 }
 

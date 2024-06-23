@@ -10,6 +10,7 @@ class Downloader {
 
     private async downloadHLS(url: string, dir: string) {
         // TODO: Implement HLS download
+        console.log('Dowloading HLS playlist not implemented yet');
     }
 
     private async downloadFile(url: string, dir: string) {

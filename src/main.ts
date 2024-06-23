@@ -1,16 +1,36 @@
 import util from 'util';
 import ScraperService from './scraper/scraper.service';
-import RedditScraper from './scraper/sites/RedditScraper';
 
 (async () => {
     const scraper = new ScraperService({
-        usePlaywright: false,
+        usePlaywright: true,
         downloadPath: './downloads',
-    }).getScraper(RedditScraper);
+        folderName: 'reddit',
+    }).getScraper();
 
     const data = await scraper.scrape(
-        'https://reddit.com/r/popular',
-        'Popular',
+        'https://www.reddit.com/r/interestingasfuck/',
+        'interestingasfuck',
+        {
+            posts: {
+                listItem: 'article',
+                data: {
+                    title: {
+                        selector: 'shreddit-post',
+                        attribute: 'post-title',
+                    },
+                    image: {
+                        selector: '[role=presentation]',
+                        attribute: 'src',
+                    },
+                    video: {
+                        selector: 'shreddit-player',
+                        attribute: 'src',
+                        download: true,
+                    },
+                },
+            },
+        },
     );
     console.log(util.inspect(data, false, null, true /* enable colors */));
 })();

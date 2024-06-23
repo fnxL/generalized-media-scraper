@@ -18,7 +18,7 @@ class ContentFetcher {
         console.log('Fetching using playwright...');
         const page = await browser.newPage();
         await page.goto(url);
-        await page.waitForLoadState('load');
+        await page.waitForLoadState('networkidle');
         const html = await page.content();
         await page.close();
         await browser.close();
