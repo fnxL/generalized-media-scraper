@@ -38,12 +38,17 @@ You need to define a selector object which defines the structure of the data tha
                 attribute: "src",
                 convert: (value: string) => `http://example.com/${value}` 
                 // you can transform values by specifying a 
-                // call back  function which returns a string.
+                // call back function which returns a string or an array
                 download: true, // specify download: true to download the media
             },
             postTags: {
                 listItems: ".tags span" // You can provide nested listItems like this
             },
+            classList: {
+                selector: 'shreddit-post',
+                attribute: 'class',
+                convert: (value: string) => value.split(' ')
+            }, // will return an array of classList
             video: { // select videos to download
                 selector: "video",
                 attribute: "src",
