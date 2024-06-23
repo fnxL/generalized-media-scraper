@@ -1,7 +1,6 @@
 {
     "scraper": {
         "maxRetries": 5,
-        "connections": 10,
         "downloadPath": "./downloads",
         "folderName": "default",
         "usePlaywright": false,

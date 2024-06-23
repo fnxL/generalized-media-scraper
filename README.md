@@ -308,9 +308,7 @@ You can configure these defaults in `config/development.json` or `config/product
 
 `folderName` | Default: `default` - Folder name to store individual media files
 
-`connections` | Default: `10` - Number of connections to make while downloading a file
-
-`maxRetries` | Default: `5` - Maximum retires before the file download is aborted
+`maxRetries` | Default: `5` - Maximum retires before scraping & file download is terminated.
 
 `usePlaywright` | Default: `false` - Will playwright chromium to render the html content. Defaults to false, which uses html returned by HttpRequest
 

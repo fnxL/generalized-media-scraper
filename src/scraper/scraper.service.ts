@@ -4,7 +4,6 @@ import DefaultScraper from './DefaultScraper';
 export interface UserScraperOpts {
     downloadPath?: string; // Path to download the files
     folderName?: string; // Folder name to store the files
-    connections?: number;
     maxRetries?: number;
     usePlaywright?: boolean;
     overwriteExistingFiles?: boolean;
@@ -21,7 +20,6 @@ class ScraperService {
 
     private createScraperOpts(opts: UserScraperOpts): ScraperOpts {
         return {
-            connections: opts.connections || config.get('scraper.connections'),
             maxRetries: opts.maxRetries || config.get('scraper.maxRetries'),
             downloadPath:
                 opts.downloadPath || config.get('scraper.downloadPath'),

@@ -20,11 +20,6 @@ const config = convict({
             format: 'int',
             default: 5,
         },
-        connections: {
-            doc: 'Maximum number of connections to use while downloading a file',
-            format: 'int',
-            default: 10,
-        },
         downloadPath: {
             doc: ' Root path to download all media files from different sites',
             format: String,
