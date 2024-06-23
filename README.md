@@ -6,10 +6,10 @@
   - [Usage](#usage)
     - [Using the scraper](#using-the-scraper)
     - [Using provided selectors for popular sites](#using-provided-selectors-for-popular-sites)
+      - [The Place 2](#the-place-2)
       - [Reddit](#reddit)
       - [Google News](#google-news)
       - [Arxiv](#arxiv)
-      - [The Place 2](#the-place-2)
   - [Scraper Options](#scraper-options)
   - [TODO](#todo)
   - [Libraries used](#libraries-used)
@@ -186,6 +186,34 @@ import ScraperService from './scraper/scraper.service';
 ```
 ### Using provided selectors for popular sites
 
+#### The Place 2
+
+You need to provide the model page to scrape photos.
+Below example code will scrape 10 pages of images of Sydney Sweeney
+
+```js
+import util from 'util';
+import ScraperService from './scraper/scraper.service';
+import theplace2Selectors from './selectors/theplace2';
+
+(async () => {
+    const scraper = new ScraperService({
+        usePlaywright: false,
+        downloadPath: './downloads',
+        folderName: 'theplace2',
+    }).getScraper();
+
+    for (let i = 1; i <= 10; i++) {
+        const data = await scraper.scrape(
+            `https://theplace-2.com/photos/Sydney-Sweeney-md6824/page${i}/`,
+            'Sydney Sweeny',
+            theplace2Selectors,
+        );
+        console.log(util.inspect(data, false, null, true));
+    }
+})();
+```
+
 #### Reddit
 
 Use playwright if you want to scrape more content.
@@ -270,33 +298,7 @@ import arxivSelectors from './scraper/selectors/arxiv';
     ); // fetch all papers from April 2024 (only from the first page)
 })();
 ```
-#### The Place 2
 
-You need to provide the model page to scrape photos.
-Below example code will scrape 10 pages of images of Sydney Sweeney
-
-```js
-import util from 'util';
-import ScraperService from './scraper/scraper.service';
-import theplace2Selectors from './selectors/theplace2';
-
-(async () => {
-    const scraper = new ScraperService({
-        usePlaywright: false,
-        downloadPath: './downloads',
-        folderName: 'theplace2',
-    }).getScraper();
-
-    for (let i = 1; i <= 10; i++) {
-        const data = await scraper.scrape(
-            `https://theplace-2.com/photos/Sydney-Sweeney-md6824/page${i}/`,
-            'Sydney Sweeny',
-            theplace2Selectors,
-        );
-        console.log(util.inspect(data, false, null, true));
-    }
-})();
-```
 
 ## Scraper Options
 
