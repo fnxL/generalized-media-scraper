@@ -42,7 +42,8 @@ class BaseScraper {
         downloader?: Downloader,
     ) {
         this.opts = opts;
-        this.contentFetcher = contentFetcher || new ContentFetcher();
+        this.contentFetcher =
+            contentFetcher || new ContentFetcher(this.opts.maxRetries);
         this.downloader = downloader || new Downloader(opts);
         this.defaultFolder = this.opts.folderName;
     }

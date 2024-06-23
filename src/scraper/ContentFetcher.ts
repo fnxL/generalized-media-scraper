@@ -2,13 +2,28 @@ import axios from 'axios';
 import { chromium } from 'playwright';
 
 class ContentFetcher {
-    constructor() {}
+    private maxRetries: number;
+    constructor(maxRetries: number) {
+        this.maxRetries = maxRetries;
+    }
 
     public async fetchHTMLContent(url: string, usePlaywright: boolean = false) {
-        if (usePlaywright) {
-            return this.fetchPlaywright(url);
+        for (let attempts = 0; attempts < this.maxRetries; attempts++) {
+            try {
+                if (usePlaywright) {
+                    return this.fetchPlaywright(url);
+                }
+                return this.httpFetch(url);
+            } catch (error) {
+                console.log(`Failed to fetch ${url}, retrying...`);
+                if (attempts == this.maxRetries - 1) {
+                    console.log(
+                        `Failed to fetch ${url} after ${this.maxRetries} attempts`,
+                    );
+                    throw error;
+                }
+            }
         }
-        return this.httpFetch(url);
     }
 
     private async fetchPlaywright(url: string) {
