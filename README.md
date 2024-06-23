@@ -38,18 +38,42 @@ You need to define a selector object which defines the structure of the data tha
             postImage: {
                 selector: ".post-image",
                 attribute: "src",
+                convert: (value: string) => `http://example.com/${value}` 
+                // you can transform values by specifying a 
+                // call back  function which returns a string.
                 download: true, // specify download: true to download the media
-                mediaType: "image" // also specify the mediaType
             },
-            articleTag: {
-                attribute: "data-tag" // TODO only providing attribute should run the query on the root listItem / article node
+            postTags: {
+                listItems: ".tags span" // You can provide nested listItems like this
             },
-            video: {
-                selector: "videoplayer",
+            video: { // select videos to download
+                selector: "video",
                 attribute: "src",
                 download: true,
-                mediaType: "video" // will handle all types of video downloading including m3u8 playlists.
+            },
+            postAuthors: {
+                selector: "dd",
+                nextSelector: ".post-author"
+                /* This will select a single 'dd' element 
+                   which is just next to 'article', and will
+                   return text from elements that are descendants of 'dd'
+                   and have '.post-author' class
+                */
+            },
+            pdf: {
+                selector: 'dd',
+                nextSelector: {
+                    selector: 'a[data="Download PDF"]'
+                    attribute: 'href'
+                }
+                /* This will select a single 'dd' element 
+                   which is just next to the root listItem 'article', 
+                   and will attribute value of href of anchor elements 
+                   that are descendats of 'dd' that have 
+                   data attribute="Download PDF" 
+                */
             }
+            
         }
     },
     articles: {
